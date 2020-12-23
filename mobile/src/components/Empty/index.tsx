@@ -3,7 +3,7 @@ import React from 'react'
 import { Container, Content, Title, Description, Image } from './styles'
 import empty from '../../assets/images/empty.png'
 
-const Splash: React.FC = () => (
+const Empty: React.FC = () => (
   <Container>
     <Image source={empty} resizeMode="contain" />
     <Content>
@@ -15,4 +15,4 @@ const Splash: React.FC = () => (
   </Container>
 )
 
-export default Splash
+export default Empty

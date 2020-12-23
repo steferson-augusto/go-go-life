@@ -10,23 +10,24 @@ import { PostProps } from '../../components/Post'
 import PostComponent from '../../components/Post'
 import Loading from '../../components/Loading'
 import Empty from '../../components/Empty'
+import Error from '../../components/Error'
 
 const hasIcon = ['messages', 'news', 'schedules', 'services']
 
 const Main: React.FC = () => {
   const route = useRoute()
-  const { title, url, content, icon } = useSelector<AplicationState, Page>(
+  const { url, content, icon } = useSelector<AplicationState, Page>(
     ({ pages }) => pages.data.find(page => page.title === route.name) as Page
   ) || { title: '', url: '', content: [] }
   const [data, setData] = useState<PostProps[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     setLoading(true)
     const getData = async () => {
       try {
         const response = await api.get<Post[]>(`/posts?url=${url}`)
-
         const posts: PostProps[] = content.map(item => {
           const dataPost =
             response?.data
@@ -43,17 +44,18 @@ const Main: React.FC = () => {
           }
         })
         setData(posts)
+        setError(false)
         setLoading(false)
       } catch (error) {
         setLoading(false)
-        console.log(error)
+        setError(true)
       }
     }
     getData()
   }, [])
 
+  if (error) return <Error />
   if (loading) return <Loading />
-
   if (data.length <= 0) return <Empty />
 
   return (
