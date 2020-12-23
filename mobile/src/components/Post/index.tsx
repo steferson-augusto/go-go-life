@@ -12,12 +12,18 @@ export interface PostProps {
 const Post: React.FC<PostProps> = ({ title, data, icon }) => (
   <Container>
     <Title>{title}</Title>
-    {data?.map((content, index) => (
-      <Description key={`${index}`}>
-        {icon ? <Icon name={icon} size={16} color="#121212" /> : null}
-        <Content icon={!!icon}>{content}</Content>
+    {data?.length > 0 ? (
+      data?.map((content, index) => (
+        <Description key={`${index}`}>
+          {icon ? <Icon name={icon} size={16} color="#121212" /> : null}
+          <Content icon={!!icon}>{content}</Content>
+        </Description>
+      ))
+    ) : (
+      <Description>
+        <Content icon={false}>Sem conteúdo.</Content>
       </Description>
-    ))}
+    )}
   </Container>
 )
 
