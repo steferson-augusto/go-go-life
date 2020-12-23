@@ -2,11 +2,6 @@
 
 <h3>Executando projeto em ambiente local</h3>
 
-<ol>
-  <li>Clone este projeto do Github</li>
-  <li>`$ npm install marked`</li>
-</ol>
-
 #### Clone este projeto do Github
 `$ git clone https://github.com/steferson-augusto/go-go-life.git`
 
