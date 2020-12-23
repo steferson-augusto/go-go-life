@@ -19,76 +19,85 @@ interface Page {
   content: Content[]
 }
 
+export const pages: Page[] = [
+  {
+    title: 'Home',
+    icon: 'home',
+    url: 'page://home',
+    content: [
+      {
+        type: 'post',
+        title: 'Home Screen',
+        properties: {
+          categories: ['services']
+        }
+      }
+    ]
+  },
+  {
+    title: 'Camara',
+    icon: 'account-balance',
+    url: 'page://camara',
+    content: [
+      {
+        type: 'post',
+        title: 'Mensagens do Presidente',
+        properties: {
+          categories: ['messages']
+        }
+      },
+      {
+        type: 'post',
+        title: 'Notícias',
+        properties: {
+          categories: ['news']
+        }
+      },
+      {
+        type: 'post',
+        title: 'Horários e Serviços',
+        properties: {
+          categories: ['schedules', 'services']
+        }
+      },
+      {
+        type: 'post',
+        title: 'Taxas e Tarifários',
+        properties: {
+          categories: ['taxes']
+        }
+      }
+    ]
+  },
+  {
+    title: 'Comunicar',
+    icon: 'forum',
+    url: 'page://comunicar',
+    content: []
+  },
+  {
+    title: 'Proteção Civil',
+    icon: 'warning',
+    url: 'page://protecao-civil',
+    content: []
+  },
+  {
+    title: 'Covid',
+    icon: 'healing',
+    url: 'page://covid',
+    content: []
+  },
+  {
+    title: 'Agenda',
+    icon: 'event',
+    url: 'page://agenda',
+    content: []
+  }
+]
+
 export default async function (
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  const pages: Page[] = [
-    {
-      title: 'Home',
-      icon: 'fa-home',
-      url: 'page://home',
-      content: []
-    },
-    {
-      title: 'Camara',
-      icon: 'fa-building',
-      url: 'page://camara',
-      content: [
-        {
-          type: 'post',
-          title: 'Mensagens do Presidente',
-          properties: {
-            categories: ['messages']
-          }
-        },
-        {
-          type: 'post',
-          title: 'Notícias',
-          properties: {
-            categories: ['news']
-          }
-        },
-        {
-          type: 'post',
-          title: 'Horários e Serviços',
-          properties: {
-            categories: ['schedules', 'services']
-          }
-        },
-        {
-          type: 'post',
-          title: 'Taxas e Tarifários',
-          properties: {
-            categories: ['taxes']
-          }
-        }
-      ]
-    },
-    {
-      title: 'Comunicar',
-      icon: 'fa-chat',
-      url: 'page://comunicar',
-      content: []
-    },
-    {
-      title: 'Proteção Civil',
-      icon: 'fa-danger',
-      url: 'page://protecao-civil',
-      content: []
-    },
-    {
-      title: 'Covid',
-      icon: 'fa-band-aid"',
-      url: 'page://covid',
-      content: []
-    },
-    {
-      title: 'Agenda',
-      icon: 'fa-calendar',
-      url: 'page://agenda',
-      content: []
-    }
-  ]
-  response.send(pages)
+  return response.send(pages)
 }

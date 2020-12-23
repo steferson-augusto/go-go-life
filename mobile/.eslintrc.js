@@ -28,7 +28,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.png'],
       },
     },
   },
@@ -40,6 +40,7 @@ module.exports = {
       tsx: 'never',
       js: 'never',
       jsx: 'never',
+      png: 'never'
     },
   ],
   rules: {
