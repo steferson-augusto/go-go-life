@@ -57,7 +57,9 @@ const Routes: React.FC = () => {
         })}
         tabBarOptions={{
           activeTintColor: '#666',
-          inactiveTintColor: '#101010'
+          inactiveTintColor: '#101010',
+          activeBackgroundColor: '#f8f8f8',
+          inactiveBackgroundColor: '#f8f8f8'
         }}
         sceneContainerStyle={{ backgroundColor: '#fff' }}
       >
