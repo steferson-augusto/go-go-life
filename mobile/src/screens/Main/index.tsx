@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { SafeAreaView, Text } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
+import { SafeAreaView, ScrollView, RefreshControl } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
 
@@ -22,37 +22,44 @@ const Main: React.FC = () => {
   const [data, setData] = useState<PostProps[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
+
+  const getData = useCallback(async () => {
+    try {
+      const response = await api.get<Post[]>(`/posts?url=${url}`)
+      const posts: PostProps[] = content.map(item => {
+        const dataPost =
+          response?.data
+            ?.filter(
+              post =>
+                item.properties.categories.includes(post.category) && post.title
+            )
+            ?.map(item => item.title) || []
+        return {
+          title: item.title,
+          data: dataPost,
+          icon: hasIcon.includes(item.properties.categories[0])
+            ? icon
+            : undefined
+        }
+      })
+      setData(posts)
+      setError(false)
+    } catch (error) {
+      setError(true)
+    }
+    setRefreshing(false)
+    setLoading(false)
+  }, [])
 
   useEffect(() => {
     setLoading(true)
-    const getData = async () => {
-      try {
-        const response = await api.get<Post[]>(`/posts?url=${url}`)
-        const posts: PostProps[] = content.map(item => {
-          const dataPost =
-            response?.data
-              ?.filter(
-                post =>
-                  item.properties.categories.includes(post.category) &&
-                  post.title
-              )
-              ?.map(item => item.title) || []
-          return {
-            title: item.title,
-            data: dataPost,
-            icon: hasIcon.includes(item.properties.categories[0])
-              ? icon
-              : undefined
-          }
-        })
-        setData(posts)
-        setError(false)
-        setLoading(false)
-      } catch (error) {
-        setLoading(false)
-        setError(true)
-      }
-    }
+
+    getData()
+  }, [])
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true)
     getData()
   }, [])
 
@@ -62,9 +69,16 @@ const Main: React.FC = () => {
 
   return (
     <SafeAreaView>
-      {data?.map((post, index) => (
-        <PostComponent key={`${index}`} {...post} />
-      ))}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        {data?.map((post, index) => (
+          <PostComponent key={`${index}`} {...post} />
+        ))}
+      </ScrollView>
     </SafeAreaView>
   )
 }
