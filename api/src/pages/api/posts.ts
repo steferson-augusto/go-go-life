@@ -68,6 +68,17 @@ export default async function (
       ]
       return response.send(posts)
     }
+    case 'page://covid': {
+      const image: Post[] = [
+        {
+          title:
+            'https://static.poder360.com.br/2020/07/nasa-coronavirus-niaid-868x644.jpg',
+          category: 'messages',
+          content: '...'
+        }
+      ]
+      return response.send(image)
+    }
     default: {
       const page = pages?.find(page => page.url === url) || {
         title: '',

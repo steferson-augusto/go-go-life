@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Container, Title, Content, Description } from './styles'
 
 export interface PostProps {
+  type: string
   title: string
   data: string[]
   icon?: string | undefined

@@ -2,7 +2,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 type Category = 'messages' | 'news' | 'schedules' | 'taxes' | 'services'
-type Type = 'post'
+type Type = 'post' | 'image'
 
 interface Content {
   type: Type
@@ -85,7 +85,15 @@ export const pages: Page[] = [
     title: 'Covid',
     icon: 'healing',
     url: 'page://covid',
-    content: []
+    content: [
+      {
+        type: 'image',
+        title: 'Covid',
+        properties: {
+          categories: ['messages']
+        }
+      }
+    ]
   },
   {
     title: 'Agenda',

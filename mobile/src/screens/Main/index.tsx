@@ -6,20 +6,28 @@ import { useSelector } from 'react-redux'
 import api from '../../api'
 import { AplicationState } from '../../store'
 import { Page, Post } from '../../store/ducks/pages/types'
-import { PostProps } from '../../components/Post'
+import { PostProps as DataProps } from '../../components/Post'
 import PostComponent from '../../components/Post'
+import ImageComponent from '../../components/Image'
 import Loading from '../../components/Loading'
 import Empty from '../../components/Empty'
 import Error from '../../components/Error'
 
+type ComponentTypes = 'post' | 'image'
+
 const hasIcon = ['messages', 'news', 'schedules', 'services']
+
+const component = {
+  post: PostComponent,
+  image: ImageComponent
+}
 
 const Main: React.FC = () => {
   const route = useRoute()
   const { url, content, icon } = useSelector<AplicationState, Page>(
     ({ pages }) => pages.data.find(page => page.title === route.name) as Page
   ) || { title: '', url: '', content: [] }
-  const [data, setData] = useState<PostProps[]>([])
+  const [data, setData] = useState<DataProps[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
@@ -27,7 +35,7 @@ const Main: React.FC = () => {
   const getData = useCallback(async () => {
     try {
       const response = await api.get<Post[]>(`/posts?url=${url}`)
-      const posts: PostProps[] = content.map(item => {
+      const posts: DataProps[] = content.map(item => {
         const dataPost =
           response?.data
             ?.filter(
@@ -36,6 +44,7 @@ const Main: React.FC = () => {
             )
             ?.map(item => item.title) || []
         return {
+          type: item.type,
           title: item.title,
           data: dataPost,
           icon: hasIcon.includes(item.properties.categories[0])
@@ -75,9 +84,10 @@ const Main: React.FC = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {data?.map((post, index) => (
-          <PostComponent key={`${index}`} {...post} />
-        ))}
+        {data?.map((post, index) => {
+          const Component = component[post.type as ComponentTypes]
+          return <Component key={`${index}`} {...post} />
+        })}
       </ScrollView>
     </SafeAreaView>
   )
