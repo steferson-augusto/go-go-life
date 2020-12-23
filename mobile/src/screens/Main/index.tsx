@@ -31,8 +31,10 @@ const Main: React.FC = () => {
         const posts: PostProps[] = content.map(item => {
           const dataPost =
             response?.data
-              ?.filter(post =>
-                item.properties.categories.includes(post.category)
+              ?.filter(
+                post =>
+                  item.properties.categories.includes(post.category) &&
+                  post.title
               )
               ?.map(item => item.title) || []
           return {
