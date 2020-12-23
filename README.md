@@ -37,6 +37,7 @@ https://reactnative.dev/docs/environment-setup
 #### Certifique-se de possuir um AVD configurado ou conecte um aparelho Android via USB
 
 Criar AVD: https://developer.android.com/studio/run/managing-avds.html
+
 Conectar via USB: https://reactnative.dev/docs/running-on-device
 
 #### Inicie a aplicação executando `$ yarn run android`
