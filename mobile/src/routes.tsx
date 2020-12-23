@@ -10,6 +10,7 @@ import { PagesState } from './store/ducks/pages/types'
 import * as PagesActions from './store/ducks/pages/actions'
 import PageScreen from './screens/Main'
 import Splash from './components/Splash'
+import Error from './components/Error'
 
 const Tab = createBottomTabNavigator()
 
@@ -19,26 +20,27 @@ const Routes: React.FC = () => {
     state => state.pages
   )
   const dispatch = useDispatch()
-  console.log(data)
   useEffect(() => {
     setSplashing(true)
+
     setTimeout(() => {
       setSplashing(false)
     }, 1500)
+
     dispatch(PagesActions.loadRequest())
     const getData = async () => {
       try {
         const response = await api.get('/pages')
-        console.log(response.data)
         dispatch(PagesActions.loadSuccess(response.data))
       } catch (error) {
         dispatch(PagesActions.loadFailure())
-        console.log(error)
       }
     }
 
     getData()
   }, [])
+
+  if (error) return <Error />
 
   if (loading || splashing) return <Splash />
 
@@ -59,18 +61,16 @@ const Routes: React.FC = () => {
         }}
         sceneContainerStyle={{ backgroundColor: '#fff' }}
       >
-        {data?.map((page, index) => {
-          return (
-            <Tab.Screen
-              key={`${index}`}
-              name={page?.title}
-              component={PageScreen}
-              options={{
-                tabBarBadge: page.title === 'Comunicar' ? 1 : undefined
-              }}
-            />
-          )
-        })}
+        {data?.map((page, index) => (
+          <Tab.Screen
+            key={`${index}`}
+            name={page?.title}
+            component={PageScreen}
+            options={{
+              tabBarBadge: page.title === 'Comunicar' ? 1 : undefined
+            }}
+          />
+        ))}
       </Tab.Navigator>
     </NavigationContainer>
   )
