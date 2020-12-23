@@ -1,30 +1,159 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+API criada com Next.js Serverless Functions.
 
-## Getting Started
+## Instalação e Uso
 
-First, run the development server:
+Instale as dependências e execute o servidor local:
 
 ```bash
-npm run dev
-# or
-yarn dev
+$ yarn
+$ yarn run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Dessa maneira, o servidor será iniciado em `http://localhost:3000`
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Endpoints
 
-## Learn More
+#### `/api/pages`
 
-To learn more about Next.js, take a look at the following resources:
+Fornece os dados necessários para gerar o menu dinâmicamente. Possui o seguinte retorno:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```json
+[
+  {
+    "title": "Home",
+    "icon": "home",
+    "url": "page://home",
+    "content": [
+      {
+        "type": "post",
+        "title": "Home Screen",
+        "properties": {
+          "categories": ["services"]
+        }
+      }
+    ]
+  },
+  {
+    "title": "Camara",
+    "icon": "account-balance",
+    "url": "page://camara",
+    "content": [
+      {
+        "type": "post",
+        "title": "Mensagens do Presidente",
+        "properties": {
+          "categories": ["messages"]
+        }
+      },
+      {
+        "type": "post",
+        "title": "Notícias",
+        "properties": {
+          "categories": [ "news"]
+        }
+      },
+      {
+        "type": "post",
+        "title": "Horários e Serviços",
+        "properties": {
+          "categories": [
+            "schedules",
+            "services"
+          ]
+        }
+      },
+      {
+        "type": "post",
+        "title": "Taxas e Tarifários",
+        "properties": {
+          "categories": ["taxes"]
+        }
+      }
+    ]
+  },
+  {
+    "title": "Comunicar",
+    "icon": "forum",
+    "url": "page://comunicar",
+    "content": []
+  },
+  {
+    "title": "Proteção Civil",
+    "icon": "warning",
+    "url": "page://protecao-civil",
+    "content": []
+  },
+  {
+    "title": "Covid",
+    "icon": "healing",
+    "url": "page://covid",
+    "content": []
+  },
+  {
+    "title": "Agenda",
+    "icon": "event",
+    "url": "page://agenda",
+    "content": []
+  }
+]
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### `/api/posts`
 
-## Deploy on Vercel
+A query parameter `url` é usada para que haja respostas distintas para chamadas de telas diferentes.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Seu retorno é usado para alimentar a sua respectiva página no aplicativo, sendo algo assim:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```json
+  {
+    "title": "O Papel do novo centro da juventude para todos",
+    "category": "messages",
+    "content": "..."
+  },
+  {
+    "title": "Mensagem de Natal 2020",
+    "category": "messages",
+    "content": "..."
+  },
+  {
+    "title": "Obras na avenida 25 de Abril finalizadas antecipadamente",
+    "category": "news",
+    "content": "..."
+  },
+  {
+    "title": "Piscinas municipais abrem portas aos cidadãos carenciados",
+    "category": "news",
+    "content": "..."
+  },
+  {
+    "title": "Horários dos serviços municipais",
+    "category": "schedules",
+    "content": "..."
+  },
+  {
+    "title": "Horários das instalações desportivas",
+    "category": "schedules",
+    "content": "..."
+  },
+  {
+    "title": "Atendimento ao cliente no serviço de águas",
+    "category": "schedules",
+    "content": "..."
+  },
+  {
+    "title": "Tarifas de licenciamento",
+    "category": "taxes",
+    "content": "..."
+  },
+  {
+    "title": "Tarifários de água do conselho",
+    "category": "taxes",
+    "content": "..."
+  },
+  {
+    "title": "Taxas de saneamento",
+    "category": "taxes",
+    "content": "..."
+  }
+]
+```
