@@ -41,3 +41,7 @@ Criar AVD: https://developer.android.com/studio/run/managing-avds.html
 Conectar via USB: https://reactnative.dev/docs/running-on-device
 
 #### Inicie a aplicação executando `$ yarn run android`
+
+<p align="center">
+  <img src="./github/animation.gif" alt="Animação" width="300" >
+</p>
